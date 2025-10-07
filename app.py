@@ -5,7 +5,7 @@ import random
 
 # --- Streamlit page config ---
 st.set_page_config(page_title="Fable Book Explorer", layout="wide")
-st.title("📚 Fable Book Explorer")
+st.title("Fable Book Explorer")
 st.caption("Browse and analyze books from a Fable reading list (API-powered).")
 
 # --- Constants ---
@@ -54,13 +54,13 @@ def fetch_all_books():
     return pd.DataFrame(rows)
 
 # --- UI: Fetch button ---
-if st.button("🔄 Fetch Books from Fable"):
+if st.button("Fetch Books from Fable"):
     with st.spinner("Fetching books..."):
         df = fetch_all_books()
-        st.success(f"✅ Fetched {len(df)} books successfully!")
+        st.success(f"Fetched {len(df)} books successfully!")
 
         # --- Sidebar filters ---
-        st.sidebar.header("🔍 Filters & Sorting")
+        st.sidebar.header("Filters & Sorting")
 
         search = st.sidebar.text_input("Search title or author")
         selected_genres = st.sidebar.multiselect("Filter by genre", sorted(df["genre"].unique()))
@@ -86,20 +86,20 @@ if st.button("🔄 Fetch Books from Fable"):
         }
 
         # --- Data Table ---
-        st.subheader("📊 Book Data")
+        st.subheader("Book Data")
         st.dataframe(filtered_df[["title", "author", "genre", "pages", "published_date", "started_reading", "finished_reading"]])
 
         # --- Download Button ---
         csv = filtered_df.to_csv(index=False).encode("utf-8")
         st.download_button(
-            "💾 Download CSV",
+            "Download CSV",
             data=csv,
             file_name="fable_books.csv",
             mime="text/csv"
         )
 
         # --- Gallery View ---
-        st.subheader("📖 Book Gallery")
+        st.subheader("Book Gallery")
         for _, row in filtered_df.iterrows():
             with st.container():
                 cols = st.columns([1, 3])
